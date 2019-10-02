@@ -9,9 +9,11 @@ import android.view.SurfaceView;
 
 public class Lienzo extends SurfaceView implements SurfaceHolder.Callback {
 
+    private Lapiz lapiz;
 
     public Lienzo(Context context, AttributeSet attrs) {
         super(context, attrs);
+        this.lapiz = new Lapiz();
     }
 
     @SuppressLint("ClickableViewAccessibility")
