@@ -3,6 +3,7 @@ package com.topicos.development.plotter.utils;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -19,6 +20,7 @@ public class Lienzo extends SurfaceView implements SurfaceHolder.Callback {
     public Lienzo(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.lapiz = new Lapiz();
+        this.setBackgroundColor(Color.WHITE);
         this.getHolder().addCallback(this);
     }
 

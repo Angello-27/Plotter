@@ -15,16 +15,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        lienzo = findViewById(R.id.surface_view);
-        redimensionar();
-    }
-
-    private void redimensionar() {
-        DisplayMetrics metrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(metrics);
-        if (metrics.widthPixels < metrics.heightPixels)
-            lienzo.getLayoutParams().height = metrics.widthPixels;
-        else
-            lienzo.getLayoutParams().width = metrics.heightPixels;
+        //lienzo = findViewById(R.id.surface_view);
     }
 }
