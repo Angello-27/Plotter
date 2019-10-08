@@ -2,8 +2,10 @@ package com.topicos.development.plotter.utils;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Path;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -22,14 +24,14 @@ public class Lienzo extends SurfaceView implements SurfaceHolder.Callback {
 
     public Lienzo(Context context, AttributeSet attrs) {
         super(context, attrs);
-        setWillNotDraw(false);
         this.lapiz = new Lapiz();
         this.getHolder().addCallback(this);
     }
 
-    @Override
-    protected void onDraw(Canvas canvas) {
-        canvas.drawPath(this.path, this.lapiz.getPaint());
+    private void dibujar() {
+        Canvas canvas = holder.lockCanvas();
+        canvas.drawPath(path, lapiz.getPaint());
+        holder.unlockCanvasAndPost(canvas);
     }
 
     @Override
@@ -37,7 +39,7 @@ public class Lienzo extends SurfaceView implements SurfaceHolder.Callback {
         this.holder = holder;
         this.path = new Path();
         this.lapiz.setColor(Color.WHITE);
-        this.punto = new Punto(getWidth() / 100, getHeight() / 100);
+        this.punto = new Punto(getWidth() / 500, getHeight() / 500);
     }
 
     @Override
@@ -54,13 +56,19 @@ public class Lienzo extends SurfaceView implements SurfaceHolder.Callback {
     public boolean onTouchEvent(MotionEvent event) {
         this.punto.setX(event.getX());
         this.punto.setY(event.getY());
-        int action = event.getAction();
-        if (action == MotionEvent.ACTION_DOWN)
-            this.path.moveTo(punto.getAbsX(), punto.getAbsY());
-        else if (action == MotionEvent.ACTION_UP)
-            this.path.lineTo(punto.getAbsX(), punto.getAbsY());
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                this.path.moveTo(punto.getAbsX(), punto.getAbsY());
+                break;
+            case MotionEvent.ACTION_MOVE:
+                this.path.lineTo(punto.getAbsX(), punto.getAbsY());
+                break;
+            default:
+                return false;
+        }
+        dibujar();
         invalidate();
-        return super.onTouchEvent(event);
+        return true;
     }
 
 }
