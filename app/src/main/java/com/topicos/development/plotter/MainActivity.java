@@ -47,8 +47,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.image_load:
                 break;
             case R.id.image_new:
+                lienzo.nuevo();
+                lienzo.setPintar(true);
                 break;
             case R.id.image_create:
+                lienzo.setPintar(true);
                 lienzo.reset();
                 break;
             case R.id.image_print:
@@ -58,8 +61,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 lienzo.reset();
                 break;
             case R.id.button_abierto:
+                lienzo.setPintar(false);
+                Log.e("", "");
                 break;
             case R.id.button_cerrado:
+                lienzo.setPintar(false);
                 break;
         }
     }

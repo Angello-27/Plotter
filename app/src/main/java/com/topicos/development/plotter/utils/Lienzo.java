@@ -21,11 +21,13 @@ public class Lienzo extends SurfaceView implements SurfaceHolder.Callback {
 
     private Path path;
     private Lapiz lapiz;
+    private boolean pintar;
     private Poligono poligono;
     private SurfaceHolder holder;
 
     public Lienzo(Context context, AttributeSet attrs) {
         super(context, attrs);
+        this.pintar = true;
         this.lapiz = new Lapiz();
         this.poligono = new Poligono();
         this.getHolder().addCallback(this);
@@ -39,14 +41,22 @@ public class Lienzo extends SurfaceView implements SurfaceHolder.Callback {
         holder.unlockCanvasAndPost(canvas);
     }
 
-    public Poligono getPoligono(){
+    public void nuevo(){
+        this.path = new Path();
+    }
+
+    public void setPintar(boolean pintar) {
+        this.pintar = pintar;
+    }
+
+    public Poligono getPoligono() {
         return this.poligono;
     }
 
     private void dibujar(Punto punto) {
         if (path.isEmpty()) {
             this.path.moveTo(punto.getAbsX(), punto.getAbsY());
-        }else
+        } else
             this.path.lineTo(punto.getAbsX(), punto.getAbsY());
         poligono.addPunto(punto);
         pintar();
@@ -85,12 +95,15 @@ public class Lienzo extends SurfaceView implements SurfaceHolder.Callback {
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            Punto punto = new Punto(event.getX(), event.getY());
-            dibujar(punto);
+        if (pintar) {
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                Punto punto = new Punto(event.getX(), event.getY());
+                dibujar(punto);
+            }
+            invalidate();
+            return true;
         }
-        invalidate();
-        return true;
+        return false;
     }
 
 }
