@@ -2,32 +2,39 @@ package com.topicos.development.plotter;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.View;
 
-import com.topicos.development.plotter.control.PoligonoListener;
-import com.topicos.development.plotter.model.Poligono;
-import com.topicos.development.plotter.model.Punto;
+import com.topicos.development.plotter.control.Dibujar;
+import com.topicos.development.plotter.control.interfaces.PoligonoListener;
+import com.topicos.development.plotter.utils.Lapiz;
 import com.topicos.development.plotter.utils.Lienzo;
 
 public class MainActivity extends AppCompatActivity implements
         View.OnClickListener, PoligonoListener {
 
+    private Lapiz lapiz;
     private Lienzo lienzo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        redimensionar();
+        init();
         onBind();
-        mostrarButton(false);
+        redimensionar();
+    }
+
+    private void init(){
+        this.lienzo = findViewById(R.id.surface_view);
+        this.lapiz = new Lapiz();
+        this.lapiz.setGrosor(10);
+        this.lapiz.setColor(Color.RED);
     }
 
     private void redimensionar() {
-        this.lienzo = findViewById(R.id.surface_view);
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
         int height = metrics.widthPixels;
@@ -48,22 +55,18 @@ public class MainActivity extends AppCompatActivity implements
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.image_create:
-                lienzo.setPintar(true);
-                lienzo.reset();
-                mostrarButton(false);
+                Dibujar.crear(lienzo);
                 break;
             case R.id.image_load:
+                Dibujar.abrir(lienzo);
                 break;
             case R.id.image_new:
-                lienzo.nuevo();
-                lienzo.setPintar(true);
-                mostrarButton(false);
+                Dibujar.agregar(lienzo);
                 break;
             case R.id.image_print:
+                Dibujar.imprimir();
                 break;
             case R.id.image_save:
-                Poligono poligono = lienzo.getPoligono();
-                lienzo.reset();
                 break;
             case R.id.button_abierto:
             case R.id.button_cerrado:

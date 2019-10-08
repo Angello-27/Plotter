@@ -17,4 +17,8 @@ public class Figura {
     public ArrayList<Poligono> getPoligonos() {
         return this.poligonos;
     }
+
+    public boolean vacia(){
+        return poligonos.isEmpty();
+    }
 }

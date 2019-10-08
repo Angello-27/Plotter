@@ -1,4 +1,4 @@
-package com.topicos.development.plotter.control;
+package com.topicos.development.plotter.control.interfaces;
 
 public interface PoligonoListener {
 
