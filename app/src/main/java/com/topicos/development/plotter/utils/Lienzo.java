@@ -10,6 +10,7 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import com.topicos.development.plotter.R;
 import com.topicos.development.plotter.control.interfaces.PointListener;
 import com.topicos.development.plotter.model.Punto;
 
@@ -18,6 +19,7 @@ public class Lienzo extends SurfaceView implements SurfaceHolder.Callback {
     private Path path;
     private boolean nuevo;
     private boolean pintar;
+    private Lapiz lapiz;
     private SurfaceHolder holder;
     private PointListener listener;
 
@@ -25,6 +27,8 @@ public class Lienzo extends SurfaceView implements SurfaceHolder.Callback {
         super(context, attrs);
         this.nuevo = true;
         this.pintar = true;
+        this.lapiz = new Lapiz();
+        this.lapiz.setColor(Color.RED);
         this.getHolder().addCallback(this);
     }
 
@@ -46,11 +50,11 @@ public class Lienzo extends SurfaceView implements SurfaceHolder.Callback {
         this.pintar = pintar;
     }
 
-    private void dibujar(Punto punto) {
+    private void dibujar(float X, float Y) {
         if (path.isEmpty()) {
-            this.path.moveTo(punto.getAbsX(), punto.getAbsY());
+            this.path.moveTo(X, Y);
         } else {
-            this.path.lineTo(punto.getAbsX(), punto.getAbsY());
+            this.path.lineTo(X, Y);
         }
         pintar();
     }
@@ -58,13 +62,14 @@ public class Lienzo extends SurfaceView implements SurfaceHolder.Callback {
     private void pintar() {
         Canvas canvas = holder.lockCanvas();
         canvas.drawColor(Color.WHITE);
-        //canvas.drawPath(path, lapiz.getPaint());
+        canvas.drawPath(path, lapiz.getPaint());
         holder.unlockCanvasAndPost(canvas);
     }
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         this.holder = holder;
+        this.path = new Path();
         reset();
     }
 
@@ -87,9 +92,12 @@ public class Lienzo extends SurfaceView implements SurfaceHolder.Callback {
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (pintar && event.getAction() == MotionEvent.ACTION_DOWN)
+        if (pintar && event.getAction() == MotionEvent.ACTION_DOWN) {
             this.listener.onTouch(event.getX(), event.getY(), this.nuevo);
+            dibujar(event.getX(), event.getY());
+        }
         this.nuevo = false;
+        invalidate();
         return true;
     }
 

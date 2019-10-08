@@ -14,10 +14,6 @@ public class Lapiz {
         this.paint.setStrokeJoin(Paint.Join.ROUND);
     }
 
-    public void setGrosor(float grosor) {
-        this.paint.setStrokeWidth(grosor);
-    }
-
     public void setColor(int color) {
         this.paint.setColor(color);
     }

@@ -14,10 +14,6 @@ public class Figura {
         this.poligonos.add(poligono);
     }
 
-    public ArrayList<Poligono> getPoligonos() {
-        return this.poligonos;
-    }
-
     public void rellenarPoligono(Punto punto) {
         poligonos.get(poligonos.size() - 1).addPunto(punto);
     }

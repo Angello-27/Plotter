@@ -16,7 +16,6 @@ import com.topicos.development.plotter.utils.Lienzo;
 public class MainActivity extends AppCompatActivity implements
         View.OnClickListener, PoligonoListener {
 
-    private Lapiz lapiz;
     private Lienzo lienzo;
     private Diseñar diseño;
 
@@ -30,11 +29,8 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     private void init(){
-        this.lienzo = findViewById(R.id.surface_view);
-        this.lapiz = new Lapiz();
-        this.lapiz.setGrosor(10);
-        this.lapiz.setColor(Color.RED);
         this.diseño = new Diseñar();
+        this.lienzo = findViewById(R.id.surface_view);
         this.lienzo.setListener(this.diseño);
     }
 
