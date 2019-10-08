@@ -11,6 +11,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import com.topicos.development.plotter.R;
+import com.topicos.development.plotter.control.interfaces.IconListener;
 import com.topicos.development.plotter.control.interfaces.PointListener;
 import com.topicos.development.plotter.model.Punto;
 
@@ -22,6 +23,7 @@ public class Lienzo extends SurfaceView implements SurfaceHolder.Callback {
     private Lapiz lapiz;
     private SurfaceHolder holder;
     private PointListener listener;
+    private IconListener iconListener;
 
     public Lienzo(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -30,6 +32,7 @@ public class Lienzo extends SurfaceView implements SurfaceHolder.Callback {
         this.lapiz = new Lapiz();
         this.lapiz.setColor(Color.RED);
         this.getHolder().addCallback(this);
+        this.iconListener = (IconListener) context;
     }
 
     public void setListener(PointListener listener){
@@ -42,19 +45,16 @@ public class Lienzo extends SurfaceView implements SurfaceHolder.Callback {
         holder.unlockCanvasAndPost(canvas);
     }
 
-    public void nuevo() {
-        this.path = new Path();
-    }
-
     public void setPintar(boolean pintar) {
         this.pintar = pintar;
     }
 
     private void dibujar(float X, float Y) {
-        if (path.isEmpty()) {
+        if (path.isEmpty())
             this.path.moveTo(X, Y);
-        } else {
+        else {
             this.path.lineTo(X, Y);
+            this.iconListener.onShowButton(true);
         }
         pintar();
     }

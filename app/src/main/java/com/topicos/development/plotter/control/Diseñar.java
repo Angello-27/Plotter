@@ -31,4 +31,13 @@ public class Diseñar implements PointListener {
     private void rellenar(Punto punto){
         figura.rellenarPoligono(punto);
     }
+
+    public void abierto(){
+
+    }
+
+    public void cerrado(){
+
+    }
+
 }

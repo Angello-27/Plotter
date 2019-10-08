@@ -2,19 +2,17 @@ package com.topicos.development.plotter;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
 
 import com.topicos.development.plotter.control.Dibujar;
 import com.topicos.development.plotter.control.Diseñar;
-import com.topicos.development.plotter.control.interfaces.PoligonoListener;
-import com.topicos.development.plotter.utils.Lapiz;
+import com.topicos.development.plotter.control.interfaces.IconListener;
 import com.topicos.development.plotter.utils.Lienzo;
 
 public class MainActivity extends AppCompatActivity implements
-        View.OnClickListener, PoligonoListener {
+        View.OnClickListener, IconListener {
 
     private Lienzo lienzo;
     private Diseñar diseño;
@@ -69,18 +67,20 @@ public class MainActivity extends AppCompatActivity implements
             case R.id.image_save:
                 break;
             case R.id.button_abierto:
+                diseño.abierto();
+                break;
             case R.id.button_cerrado:
-                lienzo.setPintar(false);
-                mostrarButton(false);
+                diseño.cerrado();
                 break;
         }
     }
 
     @Override
-    public void mostrarButton(boolean mostrar) {
+    public void onShowButton(boolean mostrar) {
         if (mostrar)
             findViewById(R.id.linear_layout).setVisibility(View.VISIBLE);
         else
             findViewById(R.id.linear_layout).setVisibility(View.GONE);
     }
+
 }
