@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Plotter</string>
+    <string name="item_palette_nuevo">new</string>
+    <string name="item_palette_cargar">load</string>
+    <string name="item_palette_guardar">save</string>
+    <string name="item_palette_imprimir">print</string>
 </resources>

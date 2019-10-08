@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@id/surface_view"/>
 
-    <include layout="@layout/content_main"
+    <com.topicos.development.plotter.utils.Lienzo
         android:id="@+id/surface_view"
         android:layout_width="match_parent"
         android:layout_height="360dp"

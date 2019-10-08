@@ -4,36 +4,29 @@ public class Punto {
 
     private int X;
     private int Y;
-    private int width;
-    private int height;
 
-    public Punto(int width, int height) {
-        this.width = width;
-        this.height = height;
+    public static int width = 1;
+    public static int height = 1;
+
+    public Punto(float x, float y) {
+        this.X = (int) x / width;
+        this.Y = (int) y / height;
     }
 
     public int getX() {
         return this.X;
     }
 
-    public void setX(float x) {
-        this.X = (int) x / this.width;
-    }
-
     public int getY() {
         return this.Y;
     }
 
-    public void setY(float y) {
-        this.Y = (int) y / this.height;
-    }
-
     public int getAbsX() {
-        return this.X * this.width;
+        return this.X * width;
     }
 
     public int getAbsY() {
-        return this.Y * this.height;
+        return this.Y * height;
     }
 
 }
