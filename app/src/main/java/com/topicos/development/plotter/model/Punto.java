@@ -5,12 +5,12 @@ public class Punto {
     private int X;
     private int Y;
 
-    public static int width = 1;
-    public static int height = 1;
+    public static float width = 1;
+    public static float height = 1;
 
     public Punto(float x, float y) {
-        this.X = (int) x / width;
-        this.Y = (int) y / height;
+        this.X = (int) (x / width);
+        this.Y = (int) (y / height);
     }
 
     public int getX() {
@@ -22,11 +22,11 @@ public class Punto {
     }
 
     public int getAbsX() {
-        return this.X * width;
+        return this.X * (int) width;
     }
 
     public int getAbsY() {
-        return this.Y * height;
+        return this.Y * (int) height;
     }
 
 }

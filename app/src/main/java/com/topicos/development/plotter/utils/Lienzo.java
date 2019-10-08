@@ -27,18 +27,16 @@ public class Lienzo extends SurfaceView implements SurfaceHolder.Callback {
     public Lienzo(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.lapiz = new Lapiz();
+        this.poligono = new Poligono();
         this.getHolder().addCallback(this);
     }
 
     public void reset() {
         this.path = new Path();
+        this.poligono = new Poligono();
         Canvas canvas = holder.lockCanvas();
         canvas.drawColor(Color.WHITE);
         holder.unlockCanvasAndPost(canvas);
-    }
-
-    public void setPoligono(Poligono poligono) {
-        this.poligono = poligono;
     }
 
     public Poligono getPoligono(){
@@ -64,8 +62,8 @@ public class Lienzo extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-        Punto.width = w / 500;
-        Punto.height = h / 500;
+        Punto.width = w / 1000;
+        Punto.height = h / 1000;
     }
 
     @Override

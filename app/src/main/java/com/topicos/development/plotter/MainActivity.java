@@ -3,28 +3,32 @@ package com.topicos.development.plotter;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 
 import com.topicos.development.plotter.model.Poligono;
+import com.topicos.development.plotter.model.Punto;
 import com.topicos.development.plotter.utils.Lienzo;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Lienzo lienzo;
-    private Poligono poligono;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        init();
+        redimensionar();
         onBind();
     }
 
-    private void init() {
+    private void redimensionar() {
         this.lienzo = findViewById(R.id.surface_view);
-        this.poligono = new Poligono();
-        this.lienzo.setPoligono(poligono);
+        DisplayMetrics metrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        int height = metrics.widthPixels;
+        lienzo.getLayoutParams().height = height;
     }
 
     private void onBind() {
@@ -32,6 +36,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.image_load).setOnClickListener(this);
         findViewById(R.id.image_print).setOnClickListener(this);
         findViewById(R.id.image_save).setOnClickListener(this);
+        findViewById(R.id.image_create).setOnClickListener(this);
+        findViewById(R.id.button_abierto).setOnClickListener(this);
+        findViewById(R.id.button_cerrado).setOnClickListener(this);
     }
 
     @Override
@@ -40,13 +47,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.image_load:
                 break;
             case R.id.image_new:
-                poligono = new Poligono();
-                lienzo.setPoligono(poligono);
+                break;
+            case R.id.image_create:
                 lienzo.reset();
                 break;
             case R.id.image_print:
                 break;
             case R.id.image_save:
+                Poligono poligono = lienzo.getPoligono();
+                lienzo.reset();
+                break;
+            case R.id.button_abierto:
+                break;
+            case R.id.button_cerrado:
                 break;
         }
     }
