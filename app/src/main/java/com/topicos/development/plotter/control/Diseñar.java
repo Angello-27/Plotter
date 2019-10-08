@@ -14,15 +14,21 @@ public class Diseñar implements PointListener {
     }
 
     @Override
-    public void onTouch(float x, float y) {
+    public void onTouch(float x, float y, boolean nuevo) {
         Punto punto = new Punto(x, y);
-        if (figura.vacia())
-            crearFigura(punto);
+        if (nuevo)
+            crearPoligono(punto);
+        else
+            rellenar(punto);
     }
-    
-    private void crearFigura(Punto punto) {
+
+    private void crearPoligono(Punto punto) {
         Poligono poligono = new Poligono();
         poligono.addPunto(punto);
         figura.addPoligono(poligono);
+    }
+
+    private void rellenar(Punto punto){
+        figura.rellenarPoligono(punto);
     }
 }

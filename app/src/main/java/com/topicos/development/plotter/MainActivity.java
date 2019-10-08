@@ -8,6 +8,7 @@ import android.util.DisplayMetrics;
 import android.view.View;
 
 import com.topicos.development.plotter.control.Dibujar;
+import com.topicos.development.plotter.control.Diseñar;
 import com.topicos.development.plotter.control.interfaces.PoligonoListener;
 import com.topicos.development.plotter.utils.Lapiz;
 import com.topicos.development.plotter.utils.Lienzo;
@@ -17,6 +18,7 @@ public class MainActivity extends AppCompatActivity implements
 
     private Lapiz lapiz;
     private Lienzo lienzo;
+    private Diseñar diseño;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +34,8 @@ public class MainActivity extends AppCompatActivity implements
         this.lapiz = new Lapiz();
         this.lapiz.setGrosor(10);
         this.lapiz.setColor(Color.RED);
+        this.diseño = new Diseñar();
+        this.lienzo.setListener(this.diseño);
     }
 
     private void redimensionar() {

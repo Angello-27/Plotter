@@ -18,7 +18,7 @@ public class Figura {
         return this.poligonos;
     }
 
-    public boolean vacia(){
-        return poligonos.isEmpty();
+    public void rellenarPoligono(Punto punto) {
+        poligonos.get(poligonos.size() - 1).addPunto(punto);
     }
 }

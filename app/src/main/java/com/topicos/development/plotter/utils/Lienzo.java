@@ -16,14 +16,20 @@ import com.topicos.development.plotter.model.Punto;
 public class Lienzo extends SurfaceView implements SurfaceHolder.Callback {
 
     private Path path;
+    private boolean nuevo;
     private boolean pintar;
     private SurfaceHolder holder;
     private PointListener listener;
 
     public Lienzo(Context context, AttributeSet attrs) {
         super(context, attrs);
+        this.nuevo = true;
         this.pintar = true;
         this.getHolder().addCallback(this);
+    }
+
+    public void setListener(PointListener listener){
+        this.listener = listener;
     }
 
     public void reset() {
@@ -82,8 +88,8 @@ public class Lienzo extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (pintar && event.getAction() == MotionEvent.ACTION_DOWN)
-            listener.onTouch(event.getX(), event.getY());
-        invalidate();
+            this.listener.onTouch(event.getX(), event.getY(), this.nuevo);
+        this.nuevo = false;
         return true;
     }
 
