@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -49,6 +50,8 @@ public class Lienzo extends SurfaceView implements SurfaceHolder.Callback {
     public boolean onTouchEvent(MotionEvent event) {
         punto.setX(event.getX());
         punto.setY(event.getY());
+        if (event.getAction() == MotionEvent.ACTION_DOWN)
+            Log.e("", "");
         return super.onTouchEvent(event);
     }
 
