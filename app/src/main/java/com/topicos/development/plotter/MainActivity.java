@@ -7,11 +7,13 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 
+import com.topicos.development.plotter.control.PoligonoListener;
 import com.topicos.development.plotter.model.Poligono;
 import com.topicos.development.plotter.model.Punto;
 import com.topicos.development.plotter.utils.Lienzo;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements
+        View.OnClickListener, PoligonoListener {
 
     private Lienzo lienzo;
 
@@ -21,6 +23,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         redimensionar();
         onBind();
+        mostrarButton(false);
     }
 
     private void redimensionar() {
@@ -44,15 +47,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.image_create:
+                lienzo.setPintar(true);
+                lienzo.reset();
+                mostrarButton(false);
+                break;
             case R.id.image_load:
                 break;
             case R.id.image_new:
                 lienzo.nuevo();
                 lienzo.setPintar(true);
-                break;
-            case R.id.image_create:
-                lienzo.setPintar(true);
-                lienzo.reset();
+                mostrarButton(false);
                 break;
             case R.id.image_print:
                 break;
@@ -61,12 +66,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 lienzo.reset();
                 break;
             case R.id.button_abierto:
-                lienzo.setPintar(false);
-                Log.e("", "");
-                break;
             case R.id.button_cerrado:
                 lienzo.setPintar(false);
+                mostrarButton(false);
                 break;
         }
+    }
+
+    @Override
+    public void mostrarButton(boolean mostrar) {
+        if (mostrar)
+            findViewById(R.id.linear_layout).setVisibility(View.VISIBLE);
+        else
+            findViewById(R.id.linear_layout).setVisibility(View.GONE);
     }
 }

@@ -14,6 +14,7 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import com.topicos.development.plotter.control.PoligonoListener;
 import com.topicos.development.plotter.model.Poligono;
 import com.topicos.development.plotter.model.Punto;
 
@@ -24,6 +25,7 @@ public class Lienzo extends SurfaceView implements SurfaceHolder.Callback {
     private boolean pintar;
     private Poligono poligono;
     private SurfaceHolder holder;
+    private PoligonoListener listener;
 
     public Lienzo(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -31,6 +33,7 @@ public class Lienzo extends SurfaceView implements SurfaceHolder.Callback {
         this.lapiz = new Lapiz();
         this.poligono = new Poligono();
         this.getHolder().addCallback(this);
+        this.listener = (PoligonoListener) context;
     }
 
     public void reset() {
@@ -41,7 +44,7 @@ public class Lienzo extends SurfaceView implements SurfaceHolder.Callback {
         holder.unlockCanvasAndPost(canvas);
     }
 
-    public void nuevo(){
+    public void nuevo() {
         this.path = new Path();
     }
 
@@ -56,8 +59,10 @@ public class Lienzo extends SurfaceView implements SurfaceHolder.Callback {
     private void dibujar(Punto punto) {
         if (path.isEmpty()) {
             this.path.moveTo(punto.getAbsX(), punto.getAbsY());
-        } else
+        } else {
             this.path.lineTo(punto.getAbsX(), punto.getAbsY());
+            listener.mostrarButton(true);
+        }
         poligono.addPunto(punto);
         pintar();
     }
