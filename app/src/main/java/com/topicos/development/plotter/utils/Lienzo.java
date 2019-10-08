@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Path;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -14,25 +15,28 @@ import com.topicos.development.plotter.model.Punto;
 
 public class Lienzo extends SurfaceView implements SurfaceHolder.Callback {
 
+    private Path path;
     private Lapiz lapiz;
     private Punto punto;
     private SurfaceHolder holder;
 
     public Lienzo(Context context, AttributeSet attrs) {
         super(context, attrs);
+        setWillNotDraw(false);
         this.lapiz = new Lapiz();
-        this.setBackgroundColor(Color.WHITE);
         this.getHolder().addCallback(this);
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
+        canvas.drawPath(this.path, this.lapiz.getPaint());
     }
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         this.holder = holder;
+        this.path = new Path();
+        this.lapiz.setColor(Color.WHITE);
         this.punto = new Punto(getWidth() / 100, getHeight() / 100);
     }
 
@@ -48,10 +52,14 @@ public class Lienzo extends SurfaceView implements SurfaceHolder.Callback {
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        punto.setX(event.getX());
-        punto.setY(event.getY());
-        if (event.getAction() == MotionEvent.ACTION_DOWN)
-            Log.e("", "");
+        this.punto.setX(event.getX());
+        this.punto.setY(event.getY());
+        int action = event.getAction();
+        if (action == MotionEvent.ACTION_DOWN)
+            this.path.moveTo(punto.getAbsX(), punto.getAbsY());
+        else if (action == MotionEvent.ACTION_UP)
+            this.path.lineTo(punto.getAbsX(), punto.getAbsY());
+        invalidate();
         return super.onTouchEvent(event);
     }
 
