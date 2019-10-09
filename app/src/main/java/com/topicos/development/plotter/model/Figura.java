@@ -14,11 +14,28 @@ public class Figura {
         this.poligonos.add(poligono);
     }
 
-    public boolean vacia(){
+    private Poligono ultimo() {
+        int index = this.poligonos.size() - 1;
+        return this.poligonos.get(index);
+    }
+
+    public boolean vacia() {
         return this.poligonos.isEmpty();
     }
 
     public void rellenarPoligono(Punto punto) {
-        poligonos.get(poligonos.size() - 1).addPunto(punto);
+        Poligono poligono = ultimo();
+        poligono.addPunto(punto);
+    }
+
+    public void formaAbierta() {
+        Poligono poligono = ultimo();
+        poligono.abierto();
+    }
+
+    public Punto formaCerrada() {
+        Poligono poligono = ultimo();
+        poligono.cerrado();
+        return poligono.primero();
     }
 }

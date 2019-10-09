@@ -38,10 +38,14 @@ public class Diseñar implements PointListener {
     }
 
     public void abierto() {
+        this.figura.formaAbierta();
         Dibujar.terminar(this.lienzo);
     }
 
     public void cerrado() {
+        Punto punto = this.figura.formaCerrada();
+        Dibujar.rellenar(this.lienzo, punto);
+        Dibujar.terminar(this.lienzo);
     }
 
     @Override
