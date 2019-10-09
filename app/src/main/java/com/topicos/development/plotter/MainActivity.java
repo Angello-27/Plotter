@@ -19,7 +19,12 @@ import com.topicos.development.plotter.constanst.Permission;
 import com.topicos.development.plotter.utils.Lienzo;
 import com.topicos.development.plotter.xml.WriteSax;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 
 public class MainActivity extends ActivityManagePermission implements
         View.OnClickListener, IconListener {
@@ -64,14 +69,18 @@ public class MainActivity extends ActivityManagePermission implements
             case R.id.image_print:
                 break;
             case R.id.image_save:
-                String FICHERO = "puntuaciones.xml";
-                WriteSax write = new WriteSax(diseño.getFigura());
+                File tarjeta = Environment.getExternalStorageDirectory();
+                Log.e("direccion", tarjeta.getAbsolutePath());
+                File file = new File(tarjeta.getAbsolutePath(), "hola.xml");
                 try {
-                    write.escribir(openFileOutput(FICHERO, Context.MODE_PRIVATE));
+                    OutputStream osw = new FileOutputStream(file);
+                    WriteSax write = new WriteSax(diseño.getFigura());
+                    write.escribir(osw);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                Log.e("direccion", getFileStreamPath("new.xml").getAbsolutePath());
                 break;
             case R.id.button_abierto:
                 this.diseño.abierto();

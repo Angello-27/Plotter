@@ -26,6 +26,7 @@ public class WriteSax {
         serializador.startTag("", figura.getClass().getName());
         serializador.endTag("", figura.getClass().getName());
         serializador.endDocument();
+    }
 
             /*serializador.setOutput(salida, "");
             serializador.startDocument("UTF-8", true);
@@ -44,5 +45,5 @@ public class WriteSax {
             }
             serializador.endTag("", "lista_puntuaciones");
             serializador.endDocument();*/
-    }
+
 }
