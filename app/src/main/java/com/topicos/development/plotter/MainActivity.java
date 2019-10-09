@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.image_create:
-                diseño.create();
+                this.diseño.create();
                 break;
             case R.id.image_new:
                 break;
@@ -55,8 +55,10 @@ public class MainActivity extends AppCompatActivity implements
             case R.id.image_save:
                 break;
             case R.id.button_abierto:
+                this.diseño.abierto();
                 break;
             case R.id.button_cerrado:
+                this.diseño.cerrado();
                 break;
         }
     }

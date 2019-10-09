@@ -6,12 +6,10 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Path;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-import com.topicos.development.plotter.R;
 import com.topicos.development.plotter.control.interfaces.IconListener;
 import com.topicos.development.plotter.control.interfaces.PointListener;
 import com.topicos.development.plotter.model.Punto;
@@ -41,12 +39,16 @@ public class Lienzo extends SurfaceView implements SurfaceHolder.Callback {
         Canvas canvas = holder.lockCanvas();
         canvas.drawColor(Color.WHITE);
         holder.unlockCanvasAndPost(canvas);
-        this.iconListener.onShowButton(false);
     }
 
     public void restart() {
         this.pintar = true;
         this.path = new Path();
+        iconListener.onShowButton(false);
+    }
+
+    public void finish(){
+        this.pintar = false;
         iconListener.onShowButton(false);
     }
 

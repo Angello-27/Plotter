@@ -38,11 +38,10 @@ public class Diseñar implements PointListener {
     }
 
     public void abierto() {
-
+        Dibujar.terminar(this.lienzo);
     }
 
     public void cerrado() {
-
     }
 
     @Override

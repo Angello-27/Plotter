@@ -7,6 +7,7 @@ public class Dibujar {
 
     static void crear(Lienzo lienzo) {
         lienzo.reset();
+        lienzo.restart();
     }
 
     static void agregar(Lienzo lienzo, Punto punto) {
@@ -18,8 +19,8 @@ public class Dibujar {
         lienzo.dibujar(punto.getAbsX(), punto.getAbsY());
     }
 
-    static void abrir(Lienzo lienzo) {
-
+    static void terminar(Lienzo lienzo) {
+        lienzo.finish();
     }
 
     static void guardar(Lienzo lienzo) {
