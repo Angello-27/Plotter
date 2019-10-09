@@ -1,5 +1,7 @@
 package com.topicos.development.plotter.control;
 
+import android.util.Log;
+
 import com.topicos.development.plotter.control.interfaces.PointListener;
 import com.topicos.development.plotter.model.Figura;
 import com.topicos.development.plotter.model.Poligono;
@@ -18,6 +20,10 @@ public class Diseñar implements PointListener {
     public void setLienzo(Lienzo lienzo) {
         this.lienzo = lienzo;
         this.lienzo.setListener(this);
+    }
+
+    private boolean completado() {
+        return this.figura.completado();
     }
 
     public void create() {
@@ -53,8 +59,13 @@ public class Diseñar implements PointListener {
         Punto punto = new Punto(x, y);
         if (this.figura.vacia())
             crearPoligono(punto);
-        else
+        else if (!completado())
             rellenar(punto);
+        else
+            crearPoligono(punto);
     }
 
+    public void attach() {
+        Dibujar.reiniciar(this.lienzo);
+    }
 }

@@ -10,6 +10,10 @@ public class Dibujar {
         lienzo.restart();
     }
 
+    static void reiniciar(Lienzo lienzo) {
+        lienzo.restart();
+    }
+
     static void agregar(Lienzo lienzo, Punto punto) {
         lienzo.restart();
         lienzo.colocar(punto.getAbsX(), punto.getAbsY());

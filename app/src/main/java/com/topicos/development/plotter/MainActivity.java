@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements
                 this.diseño.create();
                 break;
             case R.id.image_new:
+                this.diseño.attach();
                 break;
             case R.id.image_load:
                 break;

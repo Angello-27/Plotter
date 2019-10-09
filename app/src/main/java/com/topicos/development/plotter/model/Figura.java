@@ -23,6 +23,11 @@ public class Figura {
         return this.poligonos.isEmpty();
     }
 
+    public boolean completado() {
+        Poligono poligono = ultimo();
+        return poligono.getForma() != null;
+    }
+
     public void rellenarPoligono(Punto punto) {
         Poligono poligono = ultimo();
         poligono.addPunto(punto);
