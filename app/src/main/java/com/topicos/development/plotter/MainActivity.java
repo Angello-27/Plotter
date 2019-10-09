@@ -14,7 +14,6 @@ import com.topicos.development.plotter.utils.Lienzo;
 public class MainActivity extends AppCompatActivity implements
         View.OnClickListener, IconListener {
 
-    private Lienzo lienzo;
     private Diseñar diseño;
 
     @Override
@@ -23,20 +22,19 @@ public class MainActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_main);
         init();
         onBind();
-        redimensionar();
     }
 
-    private void init(){
+    private void init() {
         this.diseño = new Diseñar();
-        this.lienzo = findViewById(R.id.surface_view);
-        this.lienzo.setListener(this.diseño);
+        this.diseño.setLienzo(redimensionar());
     }
 
-    private void redimensionar() {
+    private Lienzo redimensionar() {
+        Lienzo lienzo = findViewById(R.id.surface_view);
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
-        int height = metrics.widthPixels;
-        lienzo.getLayoutParams().height = height;
+        lienzo.getLayoutParams().height = metrics.widthPixels;
+        return lienzo;
     }
 
     private void onBind() {
@@ -53,24 +51,19 @@ public class MainActivity extends AppCompatActivity implements
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.image_create:
-                Dibujar.crear(lienzo);
-                break;
-            case R.id.image_load:
-                Dibujar.abrir(lienzo);
+                diseño.create();
                 break;
             case R.id.image_new:
-                Dibujar.agregar(lienzo);
+                break;
+            case R.id.image_load:
                 break;
             case R.id.image_print:
-                Dibujar.imprimir();
                 break;
             case R.id.image_save:
                 break;
             case R.id.button_abierto:
-                diseño.abierto();
                 break;
             case R.id.button_cerrado:
-                diseño.cerrado();
                 break;
         }
     }
