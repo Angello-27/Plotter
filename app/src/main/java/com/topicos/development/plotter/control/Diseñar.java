@@ -20,7 +20,7 @@ public class Diseñar implements PointListener {
         this.lienzo.setListener(this);
     }
 
-    public void create(){
+    public void create() {
         this.figura = new Figura();
         Dibujar.crear(this.lienzo);
     }
@@ -32,15 +32,16 @@ public class Diseñar implements PointListener {
         Dibujar.agregar(this.lienzo, punto);
     }
 
-    private void rellenar(Punto punto){
+    private void rellenar(Punto punto) {
         figura.rellenarPoligono(punto);
+        Dibujar.rellenar(this.lienzo, punto);
     }
 
-    public void abierto(){
+    public void abierto() {
 
     }
 
-    public void cerrado(){
+    public void cerrado() {
 
     }
 
@@ -49,6 +50,8 @@ public class Diseñar implements PointListener {
         Punto punto = new Punto(x, y);
         if (this.figura.vacia())
             crearPoligono(punto);
+        else
+            rellenar(punto);
     }
 
 }

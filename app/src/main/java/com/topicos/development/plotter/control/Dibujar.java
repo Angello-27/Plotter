@@ -5,25 +5,28 @@ import com.topicos.development.plotter.utils.Lienzo;
 
 public class Dibujar {
 
-    static void crear(Lienzo lienzo){
+    static void crear(Lienzo lienzo) {
         lienzo.reset();
-        lienzo.setPintar(true);
     }
 
-    public static void agregar(Lienzo lienzo, Punto punto){
+    static void agregar(Lienzo lienzo, Punto punto) {
         lienzo.restart();
         lienzo.colocar(punto.getAbsX(), punto.getAbsY());
     }
 
-    public static void abrir(Lienzo lienzo){
+    static void rellenar(Lienzo lienzo, Punto punto) {
+        lienzo.dibujar(punto.getAbsX(), punto.getAbsY());
+    }
+
+    static void abrir(Lienzo lienzo) {
 
     }
 
-    public static void guardar(Lienzo lienzo){
+    static void guardar(Lienzo lienzo) {
 
     }
 
-    public static void imprimir(){
+    static void imprimir() {
 
     }
 

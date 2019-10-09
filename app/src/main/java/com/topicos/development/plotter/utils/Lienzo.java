@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Path;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -18,7 +19,6 @@ import com.topicos.development.plotter.model.Punto;
 public class Lienzo extends SurfaceView implements SurfaceHolder.Callback {
 
     private Path path;
-    private boolean nuevo;
     private boolean pintar;
     private Lapiz lapiz;
     private SurfaceHolder holder;
@@ -33,7 +33,6 @@ public class Lienzo extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     private void init() {
-        this.nuevo = true;
         this.pintar = true;
         this.lapiz = new Lapiz();
     }
@@ -42,34 +41,28 @@ public class Lienzo extends SurfaceView implements SurfaceHolder.Callback {
         Canvas canvas = holder.lockCanvas();
         canvas.drawColor(Color.WHITE);
         holder.unlockCanvasAndPost(canvas);
+        this.iconListener.onShowButton(false);
     }
 
     public void restart() {
-        this.nuevo = true;
+        this.pintar = true;
         this.path = new Path();
         iconListener.onShowButton(false);
     }
 
-    public void setPintar(boolean pintar) {
-        this.pintar = pintar;
-    }
-
     public void colocar(float X, float Y) {
-        if (path != null) {
-            this.path.moveTo(X, Y);
-            punto(X, Y);
-        }
+        if (path == null)
+            this.path = new Path();
+        this.path.moveTo(X, Y);
+        punto(X, Y);
         invalidate();
     }
 
-    private void dibujar(float X, float Y) {
-        if (path.isEmpty())
-            this.path.moveTo(X, Y);
-        else {
-            this.path.lineTo(X, Y);
-            this.iconListener.onShowButton(true);
-        }
+    public void dibujar(float X, float Y) {
+        this.path.lineTo(X, Y);
         pintar();
+        invalidate();
+        this.iconListener.onShowButton(true);
     }
 
     private void pintar() {
@@ -82,7 +75,7 @@ public class Lienzo extends SurfaceView implements SurfaceHolder.Callback {
     private void punto(float X, float Y) {
         Canvas canvas = holder.lockCanvas();
         canvas.drawColor(Color.WHITE);
-        canvas.drawCircle(X, Y, 10, lapiz.getPaint());
+        canvas.drawCircle(X, Y, 5, lapiz.getPaint());
         holder.unlockCanvasAndPost(canvas);
     }
 
