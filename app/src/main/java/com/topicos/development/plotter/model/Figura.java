@@ -23,9 +23,9 @@ public class Figura {
         return this.poligonos.isEmpty();
     }
 
-    public boolean completado() {
+    public boolean incompleto() {
         Poligono poligono = ultimo();
-        return poligono.getForma() != null;
+        return poligono.getForma() == null;
     }
 
     public void rellenarPoligono(Punto punto) {

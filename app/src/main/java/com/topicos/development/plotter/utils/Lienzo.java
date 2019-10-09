@@ -14,11 +14,14 @@ import com.topicos.development.plotter.control.interfaces.IconListener;
 import com.topicos.development.plotter.control.interfaces.PointListener;
 import com.topicos.development.plotter.model.Punto;
 
+import java.util.ArrayList;
+
 public class Lienzo extends SurfaceView implements SurfaceHolder.Callback {
 
     private Path path;
-    private boolean pintar;
     private Lapiz lapiz;
+    private boolean pintar;
+    private ArrayList<Path> list;
     private SurfaceHolder holder;
     private PointListener listener;
     private IconListener iconListener;
@@ -33,23 +36,26 @@ public class Lienzo extends SurfaceView implements SurfaceHolder.Callback {
     private void init() {
         this.pintar = true;
         this.lapiz = new Lapiz();
+        this.list = new ArrayList<>();
     }
 
     public void reset() {
-        Canvas canvas = holder.lockCanvas();
+        this.list = new ArrayList<>();
+        Canvas canvas = this.holder.lockCanvas();
         canvas.drawColor(Color.WHITE);
-        holder.unlockCanvasAndPost(canvas);
+        this.holder.unlockCanvasAndPost(canvas);
     }
 
     public void restart() {
         this.pintar = true;
         this.path = new Path();
-        iconListener.onShowButton(false);
+        this.iconListener.onShowButton(false);
     }
 
-    public void finish(){
+    public void finish() {
         this.pintar = false;
-        iconListener.onShowButton(false);
+        this.list.add(this.path);
+        this.iconListener.onShowButton(false);
     }
 
     public void colocar(float X, float Y) {
@@ -68,17 +74,21 @@ public class Lienzo extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     private void pintar() {
-        Canvas canvas = holder.lockCanvas();
+        Canvas canvas = this.holder.lockCanvas();
         canvas.drawColor(Color.WHITE);
-        canvas.drawPath(path, lapiz.getPaint());
-        holder.unlockCanvasAndPost(canvas);
+        for (Path elem : list)
+            canvas.drawPath(elem, this.lapiz.getPaint());
+        canvas.drawPath(this.path, this.lapiz.getPaint());
+        this.holder.unlockCanvasAndPost(canvas);
     }
 
     private void punto(float X, float Y) {
-        Canvas canvas = holder.lockCanvas();
+        Canvas canvas = this.holder.lockCanvas();
         canvas.drawColor(Color.WHITE);
-        canvas.drawCircle(X, Y, 5, lapiz.getPaint());
-        holder.unlockCanvasAndPost(canvas);
+        for (Path elem : list)
+            canvas.drawPath(elem, this.lapiz.getPaint());
+        canvas.drawCircle(X, Y, 5, this.lapiz.getPaint());
+        this.holder.unlockCanvasAndPost(canvas);
     }
 
     @Override
@@ -106,7 +116,7 @@ public class Lienzo extends SurfaceView implements SurfaceHolder.Callback {
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (pintar && event.getAction() == MotionEvent.ACTION_DOWN)
+        if (this.pintar && event.getAction() == MotionEvent.ACTION_DOWN)
             this.listener.onTouch(event.getX(), event.getY());
         return true;
     }

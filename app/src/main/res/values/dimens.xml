@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="margen">16dp</dimen>
+    <dimen name="top_lienzo">45dp</dimen>
+    <dimen name="height_lienzo">400dp</dimen>
 </resources>

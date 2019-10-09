@@ -22,8 +22,8 @@ public class Diseñar implements PointListener {
         this.lienzo.setListener(this);
     }
 
-    private boolean completado() {
-        return this.figura.completado();
+    private boolean incompleto() {
+        return this.figura.incompleto();
     }
 
     public void create() {
@@ -59,13 +59,14 @@ public class Diseñar implements PointListener {
         Punto punto = new Punto(x, y);
         if (this.figura.vacia())
             crearPoligono(punto);
-        else if (!completado())
+        else if (incompleto())
             rellenar(punto);
         else
             crearPoligono(punto);
     }
 
     public void attach() {
-        Dibujar.reiniciar(this.lienzo);
+        if (!incompleto())
+            Dibujar.reiniciar(this.lienzo);
     }
 }
