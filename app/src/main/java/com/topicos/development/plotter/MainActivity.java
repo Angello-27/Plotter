@@ -26,15 +26,8 @@ public class MainActivity extends AppCompatActivity implements
 
     private void init() {
         this.diseño = new Diseñar();
-        this.diseño.setLienzo(redimensionar());
-    }
-
-    private Lienzo redimensionar() {
         Lienzo lienzo = findViewById(R.id.surface_view);
-        DisplayMetrics metrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(metrics);
-        lienzo.getLayoutParams().height = metrics.widthPixels;
-        return lienzo;
+        this.diseño.setLienzo(lienzo);
     }
 
     private void onBind() {
