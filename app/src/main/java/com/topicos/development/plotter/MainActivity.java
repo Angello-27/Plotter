@@ -1,9 +1,15 @@
 package com.topicos.development.plotter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.os.Build;
+import android.os.Environment;
+
+import androidx.annotation.Nullable;
 
 import com.thebrownarrow.permissionhelper.ActivityManagePermission;
 import com.thebrownarrow.permissionhelper.PermissionResult;
@@ -11,10 +17,9 @@ import com.topicos.development.plotter.control.Diseñar;
 import com.topicos.development.plotter.control.interfaces.IconListener;
 import com.topicos.development.plotter.constanst.Permission;
 import com.topicos.development.plotter.utils.Lienzo;
+import com.topicos.development.plotter.xml.WriteSax;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
 
 public class MainActivity extends ActivityManagePermission implements
         View.OnClickListener, IconListener {
@@ -59,7 +64,14 @@ public class MainActivity extends ActivityManagePermission implements
             case R.id.image_print:
                 break;
             case R.id.image_save:
-                checkPermission();
+                String FICHERO = "puntuaciones.xml";
+                WriteSax write = new WriteSax(diseño.getFigura());
+                try {
+                    write.escribir(openFileOutput(FICHERO, Context.MODE_PRIVATE));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                Log.e("direccion", getFileStreamPath("new.xml").getAbsolutePath());
                 break;
             case R.id.button_abierto:
                 this.diseño.abierto();
@@ -84,12 +96,31 @@ public class MainActivity extends ActivityManagePermission implements
             PermissionHelper helper = new PermissionHelper();
             askCompactPermissions(Permission.PERMISSION_STORE, helper);
         }
+        //openFolder();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        /*switch (requestCode) {
+            case 0: {
+                file = new File(uri.getPath());
+            }
+        }*/
+    }
+
+    public void openFolder() {
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        Uri uri = Uri.parse(Environment.getExternalStorageDirectory().getPath());
+        intent.setDataAndType(uri, "image/png");
+        startActivity(Intent.createChooser(intent, "Open folder"));
     }
 
     private class PermissionHelper implements PermissionResult {
 
         @Override
         public void permissionGranted() {
+            //openFolder();
         }
 
         @Override

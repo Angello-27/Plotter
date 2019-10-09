@@ -14,6 +14,10 @@ public class Figura {
         this.poligonos.add(poligono);
     }
 
+    public ArrayList<Poligono> getPoligonos() {
+        return poligonos;
+    }
+
     private Poligono ultimo() {
         int index = this.poligonos.size() - 1;
         return this.poligonos.get(index);

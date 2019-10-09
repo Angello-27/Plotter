@@ -17,6 +17,10 @@ public class Diseñar implements PointListener {
         this.figura = new Figura();
     }
 
+    public Figura getFigura() {
+        return figura;
+    }
+
     public void setLienzo(Lienzo lienzo) {
         this.lienzo = lienzo;
         this.lienzo.setListener(this);
