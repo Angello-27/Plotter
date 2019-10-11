@@ -16,6 +16,7 @@ import com.thebrownarrow.permissionhelper.PermissionResult;
 import com.topicos.development.plotter.control.Diseñar;
 import com.topicos.development.plotter.control.interfaces.IconListener;
 import com.topicos.development.plotter.constanst.Permission;
+import com.topicos.development.plotter.utils.Archivo;
 import com.topicos.development.plotter.utils.Lienzo;
 import com.topicos.development.plotter.xml.WriteSax;
 
@@ -69,18 +70,6 @@ public class MainActivity extends ActivityManagePermission implements
             case R.id.image_print:
                 break;
             case R.id.image_save:
-                File tarjeta = Environment.getExternalStorageDirectory();
-                Log.e("direccion", tarjeta.getAbsolutePath());
-                File file = new File(tarjeta.getAbsolutePath(), "hola.xml");
-                try {
-                    OutputStream osw = new FileOutputStream(file);
-                    WriteSax write = new WriteSax(diseño.getFigura());
-                    write.escribir(osw);
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
                 break;
             case R.id.button_abierto:
                 this.diseño.abierto();
