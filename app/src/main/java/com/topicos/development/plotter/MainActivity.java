@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 
 import com.thebrownarrow.permissionhelper.ActivityManagePermission;
 import com.thebrownarrow.permissionhelper.PermissionResult;
+import com.topicos.development.plotter.control.Almacenar;
 import com.topicos.development.plotter.control.Diseñar;
 import com.topicos.development.plotter.control.interfaces.IconListener;
 import com.topicos.development.plotter.constanst.Permission;
@@ -70,6 +71,7 @@ public class MainActivity extends ActivityManagePermission implements
             case R.id.image_print:
                 break;
             case R.id.image_save:
+                checkPermission();
                 break;
             case R.id.button_abierto:
                 this.diseño.abierto();
@@ -93,32 +95,15 @@ public class MainActivity extends ActivityManagePermission implements
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             PermissionHelper helper = new PermissionHelper();
             askCompactPermissions(Permission.PERMISSION_STORE, helper);
-        }
-        //openFolder();
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        /*switch (requestCode) {
-            case 0: {
-                file = new File(uri.getPath());
-            }
-        }*/
-    }
-
-    public void openFolder() {
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        Uri uri = Uri.parse(Environment.getExternalStorageDirectory().getPath());
-        intent.setDataAndType(uri, "image/png");
-        startActivity(Intent.createChooser(intent, "Open folder"));
+        } else
+            Almacenar.guardar();
     }
 
     private class PermissionHelper implements PermissionResult {
 
         @Override
         public void permissionGranted() {
-            //openFolder();
+            Almacenar.guardar();
         }
 
         @Override

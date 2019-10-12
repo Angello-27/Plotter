@@ -1,7 +1,5 @@
 package com.topicos.development.plotter.control;
 
-import android.util.Log;
-
 import com.topicos.development.plotter.control.interfaces.PointListener;
 import com.topicos.development.plotter.model.Figura;
 import com.topicos.development.plotter.model.Poligono;

@@ -8,7 +8,7 @@ import java.io.IOException;
 public class Archivo {
 
     public String createPath() {
-        String absolutePath = Environment.getExternalStorageDirectory().getPath() + "Plotter";
+        String absolutePath = Environment.getExternalStorageDirectory().getPath() + "/Plotter";
         File file = new File(absolutePath);
         boolean created = file.mkdirs();
         return file.getAbsolutePath();
