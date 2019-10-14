@@ -4,22 +4,18 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 
-import androidx.appcompat.app.AlertDialog;
-
 import com.thebrownarrow.permissionhelper.ActivityManagePermission;
 import com.thebrownarrow.permissionhelper.PermissionResult;
 import com.topicos.development.plotter.constanst.Permission;
 import com.topicos.development.plotter.control.Almacenar;
 import com.topicos.development.plotter.control.Diseñar;
 import com.topicos.development.plotter.control.interfaces.IconListener;
-import com.topicos.development.plotter.dialog.DefaultDialog;
 import com.topicos.development.plotter.utils.Lienzo;
 
 public class MainActivity extends ActivityManagePermission implements
         View.OnClickListener, IconListener {
 
     private Diseñar diseño;
-    private AlertDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +29,6 @@ public class MainActivity extends ActivityManagePermission implements
         this.diseño = new Diseñar();
         Lienzo lienzo = findViewById(R.id.surface_view);
         this.diseño.setLienzo(lienzo);
-        this.dialog = DefaultDialog.create(this, null);
     }
 
     private void onBind() {
@@ -58,8 +53,6 @@ public class MainActivity extends ActivityManagePermission implements
             case R.id.image_load:
                 break;
             case R.id.image_print:
-                dialog.setMessage("Mensaje de prueba como se veria el dialogo con los nuevos temas");
-                dialog.show();
                 break;
             case R.id.image_save:
                 checkPermission();
