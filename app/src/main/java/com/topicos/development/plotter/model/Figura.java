@@ -10,14 +10,6 @@ public class Figura {
         this.poligonos = new ArrayList<>();
     }
 
-    public void addPoligono(Poligono poligono) {
-        this.poligonos.add(poligono);
-    }
-
-    public ArrayList<Poligono> getPoligonos() {
-        return poligonos;
-    }
-
     private Poligono ultimo() {
         int index = this.poligonos.size() - 1;
         return this.poligonos.get(index);
@@ -28,8 +20,16 @@ public class Figura {
     }
 
     public boolean incompleto() {
+        if (vacia())
+            return true;
         Poligono poligono = ultimo();
         return poligono.getForma() == null;
+    }
+
+    public void crearPoligono(Punto punto) {
+        Poligono poligono = new Poligono();
+        poligono.addPunto(punto);
+        this.poligonos.add(poligono);
     }
 
     public void rellenarPoligono(Punto punto) {
@@ -37,14 +37,18 @@ public class Figura {
         poligono.addPunto(punto);
     }
 
-    public void formaAbierta() {
+    public void cerrarPoligono(boolean option) {
         Poligono poligono = ultimo();
-        poligono.abierto();
+        if (option)
+            poligono.cerrado();
+        else
+            poligono.abierto();
     }
 
-    public Punto formaCerrada() {
+    public Punto getPuntoInicial() {
+        if (vacia())
+            return new Punto(0, 0);
         Poligono poligono = ultimo();
-        poligono.cerrado();
         return poligono.primero();
     }
 }

@@ -7,8 +7,7 @@ import com.topicos.development.plotter.model.Poligono;
 import com.topicos.development.plotter.model.Punto;
 import com.topicos.development.plotter.utils.Lienzo;
 
-public class Diseñar implements
-        PointListener, ActionListener {
+public class Diseñar implements PointListener, ActionListener {
 
     private Figura figura;
     private Lienzo lienzo;
@@ -19,69 +18,24 @@ public class Diseñar implements
         this.lienzo.setListener(this);
     }
 
-    private boolean incompleto() {
-        if (this.figura.vacia())
-            return true;
-        return this.figura.incompleto();
-    }
-
-    public void create() {
+    @Override
+    public void onCreate() {
         this.figura = new Figura();
         Dibujar.crear(this.lienzo);
     }
 
-    private void crearPoligono(Punto punto) {
-        Poligono poligono = new Poligono();
-        poligono.addPunto(punto);
-        this.figura.addPoligono(poligono);
-        Dibujar.agregar(this.lienzo, punto);
-    }
-
-    private void rellenar(Punto punto) {
-        figura.rellenarPoligono(punto);
-        Dibujar.rellenar(this.lienzo, punto);
-    }
-
-    public void abierto() {
-        this.figura.formaAbierta();
-        Dibujar.terminar(this.lienzo);
-    }
-
-    public void cerrado() {
-        Punto punto = this.figura.formaCerrada();
-        Dibujar.rellenar(this.lienzo, punto);
-        Dibujar.terminar(this.lienzo);
-    }
-
     @Override
-    public void onTouch(float x, float y) {
-        Punto punto = new Punto(x, y);
-        if (this.figura.vacia())
-            crearPoligono(punto);
-        else if (incompleto())
-            rellenar(punto);
-        else
-            crearPoligono(punto);
-    }
-
-    public void attach() {
-        if (!incompleto())
+    public void onAttach() {
+        if (!this.figura.incompleto())
             Dibujar.reiniciar(this.lienzo);
     }
 
     @Override
-    public void onCreate() {
-
-    }
-
-    @Override
-    public void onAttach() {
-
-    }
-
-    @Override
     public void onFinish(boolean option) {
-
+        this.figura.cerrarPoligono(option);
+        if (option)
+            Dibujar.rellenar(this.lienzo, this.figura.getPuntoInicial());
+        Dibujar.terminar(this.lienzo);
     }
 
     @Override
@@ -98,4 +52,17 @@ public class Diseñar implements
     public void onPrint() {
 
     }
+
+    @Override
+    public void onTouch(float x, float y) {
+        Punto punto = new Punto(x, y);
+        if (this.figura.vacia() || !this.figura.incompleto()) {
+            this.figura.crearPoligono(punto);
+            Dibujar.agregar(this.lienzo, punto);
+        } else {
+            figura.rellenarPoligono(punto);
+            Dibujar.rellenar(this.lienzo, punto);
+        }
+    }
+
 }
