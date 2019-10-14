@@ -36,7 +36,10 @@ public class Lienzo extends SurfaceView implements SurfaceHolder.Callback {
     private void init() {
         this.pintar = true;
         this.lapiz = new Lapiz();
-        this.list = new ArrayList<>();
+    }
+
+    public void setListener(PointListener listener) {
+        this.listener = listener;
     }
 
     public void reset() {
@@ -92,21 +95,6 @@ public class Lienzo extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     @Override
-    public void surfaceCreated(SurfaceHolder holder) {
-        this.holder = holder;
-        reset();
-    }
-
-    @Override
-    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-        this.holder = holder;
-    }
-
-    @Override
-    public void surfaceDestroyed(SurfaceHolder holder) {
-    }
-
-    @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
         Punto.width = w / 100;
@@ -121,7 +109,18 @@ public class Lienzo extends SurfaceView implements SurfaceHolder.Callback {
         return true;
     }
 
-    public void setListener(PointListener listener) {
-        this.listener = listener;
+    @Override
+    public void surfaceCreated(SurfaceHolder holder) {
+        this.holder = holder;
+        reset();
+    }
+
+    @Override
+    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+        this.holder = holder;
+    }
+
+    @Override
+    public void surfaceDestroyed(SurfaceHolder holder) {
     }
 }

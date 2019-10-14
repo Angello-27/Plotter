@@ -15,7 +15,6 @@ public class Dibujar {
     }
 
     static void agregar(Lienzo lienzo, Punto punto) {
-        lienzo.restart();
         lienzo.colocar(punto.getAbsX(), punto.getAbsY());
     }
 
@@ -26,13 +25,4 @@ public class Dibujar {
     static void terminar(Lienzo lienzo) {
         lienzo.finish();
     }
-
-    static void guardar(Lienzo lienzo) {
-
-    }
-
-    static void imprimir() {
-
-    }
-
 }

@@ -21,9 +21,9 @@ public class Figura {
 
     public boolean incompleto() {
         if (vacia())
-            return true;
+            return false;
         Poligono poligono = ultimo();
-        return poligono.getForma() == null;
+        return poligono.getForma() != null;
     }
 
     public void crearPoligono(Punto punto) {

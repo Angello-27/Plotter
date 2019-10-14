@@ -12,31 +12,27 @@ public class Poligono {
     private Geometria forma;
     private ArrayList<Punto> puntos;
 
-    public Poligono() {
+    Poligono() {
         this.puntos = new ArrayList<>();
     }
 
-    public void addPunto(Punto punto) {
+    void addPunto(Punto punto) {
         this.puntos.add(punto);
     }
 
-    public ArrayList<Punto> getPuntos() {
-        return this.puntos;
-    }
-
-    public Geometria getForma() {
+    Geometria getForma() {
         return forma;
     }
 
-    public Punto primero(){
+    Punto primero(){
         return this.puntos.get(0);
     }
 
-    public void abierto() {
+    void abierto() {
         this.forma = Geometria.ABIERTO;
     }
 
-    public void cerrado() {
+    void cerrado() {
         this.forma = Geometria.CERRADO;
         this.puntos.add(puntos.get(0));
     }
