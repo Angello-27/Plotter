@@ -1,30 +1,27 @@
 package com.topicos.development.plotter.control;
 
+import com.topicos.development.plotter.control.interfaces.ActionListener;
 import com.topicos.development.plotter.control.interfaces.PointListener;
 import com.topicos.development.plotter.model.Figura;
 import com.topicos.development.plotter.model.Poligono;
 import com.topicos.development.plotter.model.Punto;
 import com.topicos.development.plotter.utils.Lienzo;
 
-public class Diseñar implements PointListener {
+public class Diseñar implements
+        PointListener, ActionListener {
 
     private Figura figura;
     private Lienzo lienzo;
 
-    public Diseñar() {
+    public Diseñar(Lienzo lienzo) {
         this.figura = new Figura();
-    }
-
-    public Figura getFigura() {
-        return figura;
-    }
-
-    public void setLienzo(Lienzo lienzo) {
         this.lienzo = lienzo;
         this.lienzo.setListener(this);
     }
 
     private boolean incompleto() {
+        if (this.figura.vacia())
+            return true;
         return this.figura.incompleto();
     }
 
@@ -70,5 +67,35 @@ public class Diseñar implements PointListener {
     public void attach() {
         if (!incompleto())
             Dibujar.reiniciar(this.lienzo);
+    }
+
+    @Override
+    public void onCreate() {
+
+    }
+
+    @Override
+    public void onAttach() {
+
+    }
+
+    @Override
+    public void onFinish(boolean option) {
+
+    }
+
+    @Override
+    public void onSave() {
+
+    }
+
+    @Override
+    public void onLoad() {
+
+    }
+
+    @Override
+    public void onPrint() {
+
     }
 }

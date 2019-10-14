@@ -1,6 +1,6 @@
 package com.topicos.development.plotter.control;
 
-import com.topicos.development.plotter.utils.Archivo;
+import com.topicos.development.plotter.storage.Archivo;
 
 import java.io.File;
 import java.io.IOException;

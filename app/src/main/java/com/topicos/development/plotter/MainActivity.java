@@ -3,9 +3,11 @@ package com.topicos.development.plotter;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import com.thebrownarrow.permissionhelper.ActivityManagePermission;
 import com.thebrownarrow.permissionhelper.PermissionResult;
+import com.topicos.development.plotter.communication.Bluetooth;
 import com.topicos.development.plotter.constanst.Permission;
 import com.topicos.development.plotter.control.Almacenar;
 import com.topicos.development.plotter.control.Diseñar;
@@ -26,9 +28,8 @@ public class MainActivity extends ActivityManagePermission implements
     }
 
     private void init() {
-        this.diseño = new Diseñar();
         Lienzo lienzo = findViewById(R.id.surface_view);
-        this.diseño.setLienzo(lienzo);
+        this.diseño = new Diseñar(lienzo);
     }
 
     private void onBind() {
@@ -45,25 +46,32 @@ public class MainActivity extends ActivityManagePermission implements
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.image_create:
-                this.diseño.create();
+                this.diseño.onCreate();
                 break;
             case R.id.image_new:
-                this.diseño.attach();
-                break;
-            case R.id.image_load:
-                break;
-            case R.id.image_print:
-                break;
-            case R.id.image_save:
-                checkPermission();
+                this.diseño.onAttach();
                 break;
             case R.id.button_abierto:
-                this.diseño.abierto();
+                this.diseño.onFinish(false);
                 break;
             case R.id.button_cerrado:
-                this.diseño.cerrado();
+                this.diseño.onFinish(true);
+                break;
+            case R.id.image_load:
+                checkPermission(false);
+                break;
+            case R.id.image_save:
+                checkPermission(true);
+                break;
+            case R.id.image_print:
+                this.diseño.onPrint();
                 break;
         }
+    }
+
+    @Override
+    public void onMessage(String text) {
+        Toast.makeText(this, text, Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -74,24 +82,37 @@ public class MainActivity extends ActivityManagePermission implements
             findViewById(R.id.linear_layout).setVisibility(View.GONE);
     }
 
-    public void checkPermission() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            PermissionHelper helper = new PermissionHelper();
-            askCompactPermissions(Permission.PERMISSION_STORE, helper);
-        } else
-            Almacenar.guardar();
+    public void checkPermission(boolean option) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+            askCompactPermissions(Permission.PERMISSION_STORE, new PermissionHelper(option));
+        else {
+            if (option)
+                this.diseño.onSave();
+            else
+                this.diseño.onLoad();
+        }
+
     }
 
     private class PermissionHelper implements PermissionResult {
 
+        private boolean option;
+
+        PermissionHelper(boolean option) {
+            this.option = option;
+        }
+
         @Override
         public void permissionGranted() {
-            Almacenar.guardar();
+            if (this.option)
+                diseño.onSave();
+            else
+                diseño.onLoad();
         }
 
         @Override
         public void permissionDenied() {
-
+            onMessage("Los permisos para la lectura y escritura del disco fueron rechazados");
         }
 
         @Override
