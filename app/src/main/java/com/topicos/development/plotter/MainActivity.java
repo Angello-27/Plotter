@@ -1,37 +1,25 @@
 package com.topicos.development.plotter;
 
-import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.os.Build;
-import android.os.Environment;
+import android.os.Bundle;
+import android.view.View;
 
-import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 
 import com.thebrownarrow.permissionhelper.ActivityManagePermission;
 import com.thebrownarrow.permissionhelper.PermissionResult;
+import com.topicos.development.plotter.constanst.Permission;
 import com.topicos.development.plotter.control.Almacenar;
 import com.topicos.development.plotter.control.Diseñar;
 import com.topicos.development.plotter.control.interfaces.IconListener;
-import com.topicos.development.plotter.constanst.Permission;
-import com.topicos.development.plotter.utils.Archivo;
+import com.topicos.development.plotter.dialog.DefaultDialog;
 import com.topicos.development.plotter.utils.Lienzo;
-import com.topicos.development.plotter.xml.WriteSax;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 
 public class MainActivity extends ActivityManagePermission implements
         View.OnClickListener, IconListener {
 
     private Diseñar diseño;
+    private AlertDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +33,7 @@ public class MainActivity extends ActivityManagePermission implements
         this.diseño = new Diseñar();
         Lienzo lienzo = findViewById(R.id.surface_view);
         this.diseño.setLienzo(lienzo);
+        this.dialog = DefaultDialog.create(this, null);
     }
 
     private void onBind() {
@@ -69,6 +58,8 @@ public class MainActivity extends ActivityManagePermission implements
             case R.id.image_load:
                 break;
             case R.id.image_print:
+                dialog.setMessage("Mensaje de prueba como se veria el dialogo con los nuevos temas");
+                dialog.show();
                 break;
             case R.id.image_save:
                 checkPermission();
@@ -89,7 +80,6 @@ public class MainActivity extends ActivityManagePermission implements
         else
             findViewById(R.id.linear_layout).setVisibility(View.GONE);
     }
-
 
     public void checkPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
