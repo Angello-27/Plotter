@@ -27,23 +27,4 @@ public class WriteSax {
         serializador.endTag("", figura.getClass().getName());
         serializador.endDocument();
     }
-
-            /*serializador.setOutput(salida, "");
-            serializador.startDocument("UTF-8", true);
-            serializador.startTag("", "lista_puntuaciones");
-            for (Puntuacion puntuacion : listaPuntuaciones) {
-                serializador.startTag("", "puntuacion");
-                serializador.attribute("", "fecha",
-                        String.valueOf(puntuacion.fecha));
-                serializador.startTag("", "nombre");
-                serializador.text(puntuacion.nombre);
-                serializador.endTag("", "nombre");
-                serializador.startTag("", "puntos");
-                serializador.text(String.valueOf(puntuacion.puntos));
-                serializador.endTag("", "puntos");
-                serializador.endTag("", "puntuacion");
-            }
-            serializador.endTag("", "lista_puntuaciones");
-            serializador.endDocument();*/
-
 }
