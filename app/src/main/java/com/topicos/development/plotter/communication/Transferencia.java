@@ -8,11 +8,13 @@ import java.io.IOException;
 
 public class Transferencia {
 
-    public static void enviar(BluetoothSocket socket, Figura figura) throws IOException {
-        if (!figura.vacia() && socket != null){
+    public static boolean enviar(BluetoothSocket socket, Figura figura) throws IOException {
+        if (!figura.vacia() && socket != null) {
             String message = figura.convertTo();
             socket.getOutputStream().write(message.getBytes());
+            return true;
         }
+        return false;
     }
 
 }

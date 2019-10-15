@@ -56,7 +56,8 @@ public class Figura {
         StringBuilder result = new StringBuilder();
         for (Poligono poligono : poligonos)
             result.append(poligono.toString())
-                    .append(" - ");
+                    .append("-");
+        result.append("#");
         return result.toString();
     }
 

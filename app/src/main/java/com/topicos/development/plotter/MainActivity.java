@@ -64,7 +64,7 @@ public class MainActivity extends ActivityManagePermission implements
                 checkPermission(true);
                 break;
             case R.id.image_print:
-                this.diseño.onPrint();
+                this.diseño.onPrint(this);
                 break;
         }
     }

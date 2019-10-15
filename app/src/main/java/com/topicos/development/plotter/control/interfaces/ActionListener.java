@@ -1,5 +1,7 @@
 package com.topicos.development.plotter.control.interfaces;
 
+import android.content.Context;
+
 public interface ActionListener {
 
     void onCreate();
@@ -12,5 +14,5 @@ public interface ActionListener {
 
     void onLoad();
 
-    void onPrint();
+    void onPrint(Context context);
 }
