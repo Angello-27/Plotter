@@ -1,5 +1,7 @@
 package com.topicos.development.plotter.model;
 
+import androidx.annotation.NonNull;
+
 import java.util.ArrayList;
 
 public class Poligono {
@@ -24,7 +26,7 @@ public class Poligono {
         return forma;
     }
 
-    Punto primero(){
+    Punto primero() {
         return this.puntos.get(0);
     }
 
@@ -37,4 +39,15 @@ public class Poligono {
         this.puntos.add(puntos.get(0));
     }
 
+    @NonNull
+    @Override
+    public String toString() {
+        StringBuilder result = new StringBuilder();
+        result.append("{");
+        for (Punto punto : puntos)
+            result.append(punto.toString())
+                    .append(";");
+        result.append("}");
+        return result.toString();
+    }
 }
