@@ -1,15 +1,19 @@
 package com.topicos.development.plotter.control;
 
+import com.topicos.development.plotter.communication.Bluetooth;
 import com.topicos.development.plotter.control.interfaces.ActionListener;
 import com.topicos.development.plotter.control.interfaces.PointListener;
 import com.topicos.development.plotter.model.Figura;
 import com.topicos.development.plotter.model.Punto;
 import com.topicos.development.plotter.utils.Lienzo;
 
+import java.io.IOException;
+
 public class Diseñar implements PointListener, ActionListener {
 
     private Figura figura;
     private Lienzo lienzo;
+    private Bluetooth bluetooth;
 
     public Diseñar(Lienzo lienzo) {
         this.figura = new Figura();
@@ -49,7 +53,13 @@ public class Diseñar implements PointListener, ActionListener {
 
     @Override
     public void onPrint() {
-
+        this.bluetooth = new Bluetooth();
+        this.bluetooth.buscarVinculados();
+        try {
+            this.bluetooth.conectar();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
