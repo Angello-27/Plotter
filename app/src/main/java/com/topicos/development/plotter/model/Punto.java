@@ -1,5 +1,7 @@
 package com.topicos.development.plotter.model;
 
+import androidx.annotation.NonNull;
+
 public class Punto {
 
     private int X;
@@ -29,4 +31,9 @@ public class Punto {
         return this.Y * (int) height;
     }
 
+    @NonNull
+    @Override
+    public String toString() {
+        return this.X + "," + this.Y;
+    }
 }

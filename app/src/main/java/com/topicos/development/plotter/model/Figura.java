@@ -51,4 +51,14 @@ public class Figura {
         Poligono poligono = ultimo();
         return poligono.primero();
     }
+
+    public String convertTo() {
+        StringBuilder result = new StringBuilder();
+        for (Poligono poligono : poligonos)
+            result.append(poligono.toString())
+                    .append("-");
+        result.append("#");
+        return result.toString();
+    }
+
 }

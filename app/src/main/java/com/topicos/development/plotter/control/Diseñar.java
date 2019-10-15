@@ -1,6 +1,10 @@
 package com.topicos.development.plotter.control;
 
+import android.content.Context;
+import android.widget.Toast;
+
 import com.topicos.development.plotter.communication.Bluetooth;
+import com.topicos.development.plotter.communication.Transferencia;
 import com.topicos.development.plotter.control.interfaces.ActionListener;
 import com.topicos.development.plotter.control.interfaces.PointListener;
 import com.topicos.development.plotter.model.Figura;
@@ -53,14 +57,16 @@ public class Diseñar implements PointListener, ActionListener {
     }
 
     @Override
-    public void onPrint() {
+    public void onPrint(Context context) {
         if (this.bluetooth.existDevice())
             this.bluetooth.buscarVinculados();
         try {
-            this.bluetooth.conectar();
-            this.bluetooth.getSocket();
+            if (!this.bluetooth.conectar())
+                Toast.makeText(context, "Falla con la conexion", Toast.LENGTH_SHORT).show();
+            if (Transferencia.enviar(this.bluetooth.getSocket(), this.figura))
+                Toast.makeText(context, "Se envio correctamente los datos", Toast.LENGTH_SHORT).show();
         } catch (IOException e) {
-            e.printStackTrace();
+            Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
         }
     }
 
