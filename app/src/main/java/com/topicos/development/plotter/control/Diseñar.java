@@ -1,6 +1,7 @@
 package com.topicos.development.plotter.control;
 
 import com.topicos.development.plotter.communication.Bluetooth;
+import com.topicos.development.plotter.communication.Transferencia;
 import com.topicos.development.plotter.control.interfaces.ActionListener;
 import com.topicos.development.plotter.control.interfaces.PointListener;
 import com.topicos.development.plotter.model.Figura;
@@ -58,7 +59,7 @@ public class Diseñar implements PointListener, ActionListener {
             this.bluetooth.buscarVinculados();
         try {
             this.bluetooth.conectar();
-            this.bluetooth.getSocket();
+            Transferencia.enviar(this.bluetooth.getSocket(), this.figura);
         } catch (IOException e) {
             e.printStackTrace();
         }
