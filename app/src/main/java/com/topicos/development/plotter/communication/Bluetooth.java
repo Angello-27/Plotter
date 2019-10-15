@@ -29,12 +29,20 @@ public class Bluetooth {
         }
     }
 
+    public boolean existDevice() {
+        return this.device == null;
+    }
+
     public void conectar() throws IOException {
         if (this.device != null &&
                 (this.socket == null || !this.socket.isConnected())) {
             this.socket = this.device.createInsecureRfcommSocketToServiceRecord(Connection.BASE_UUID);
             this.socket.connect();
         }
+    }
+
+    public BluetoothSocket getSocket() {
+        return this.socket;
     }
 
 }

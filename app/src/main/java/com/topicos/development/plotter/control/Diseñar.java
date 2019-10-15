@@ -16,8 +16,9 @@ public class Diseñar implements PointListener, ActionListener {
     private Bluetooth bluetooth;
 
     public Diseñar(Lienzo lienzo) {
-        this.figura = new Figura();
         this.lienzo = lienzo;
+        this.figura = new Figura();
+        this.bluetooth = new Bluetooth();
         this.lienzo.setListener(this);
     }
 
@@ -53,10 +54,11 @@ public class Diseñar implements PointListener, ActionListener {
 
     @Override
     public void onPrint() {
-        this.bluetooth = new Bluetooth();
-        this.bluetooth.buscarVinculados();
+        if (this.bluetooth.existDevice())
+            this.bluetooth.buscarVinculados();
         try {
             this.bluetooth.conectar();
+            this.bluetooth.getSocket();
         } catch (IOException e) {
             e.printStackTrace();
         }
